@@ -1,0 +1,26 @@
+{
+  "name": "boilerplate",
+  "version": "0.0.1",
+  "description": "A boilerplate for new projects",
+  "author": "Thays <thays.sn@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "cook": "git init && yarn && yarn init &&  yarn eslint --init",
+    "cook:npm": "git init && npm i && npm init && npx eslint --init",
+    "lint": "yarn eslint ./",
+    "lint:npm": "npx eslint ./"
+  },
+  "engines": {
+    "node": "12.4.0",
+    "npm": "6.9.0",
+    "yarn": "1.17.0"
+  },
+  "engineStrict": true,
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "husky": "^2.4.1"
+  },
+  "dependencies": {},
+  "main": "src/index.js",
+  "repository": "git@github.com:thayssn/boilerplate.git"
+}
