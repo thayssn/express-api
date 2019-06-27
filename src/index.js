@@ -31,11 +31,18 @@ server.get('/users', (req, res) => {
   return res.status(200).json(users);
 });
 
-server.get('/users/:id', (req, res) => {
-  const { id } = req.params; // route params
+const checkUserInArray = (req, res, next) => {
+  const { id } = req.params;
   const user = users.find(u => u.id === parseInt(id, 0));
-  return res.status(200).json(user);
-});
+
+  if (!user) {
+    return res.status(404).json({ error: 'este usuário não existe.' });
+  }
+
+  req.user = user;
+
+  return next();
+};
 
 server.post('/users', (req, res) => {
   const user = req.body; // payload
@@ -47,7 +54,9 @@ server.post('/users', (req, res) => {
   return res.status(201).json({ success: 'usuário adicionado com sucesso.' });
 });
 
-server.put('/users/:id', (req, res) => {
+server.get('/users/:id', checkUserInArray, (req, res) => res.status(200).json(req.user));
+
+server.put('/users/:id', checkUserInArray, (req, res) => {
   const user = req.body;
   const { id } = req.params;
 
@@ -56,7 +65,7 @@ server.put('/users/:id', (req, res) => {
   return res.status(200).json({ success: 'usuário atualizado com sucesso.' });
 });
 
-server.delete('/users/:id', (req, res) => {
+server.delete('/users/:id', checkUserInArray, (req, res) => {
   const { id } = req.params;
 
   users = users.filter(u => u.id !== parseInt(id, 0));
