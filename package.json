@@ -8,7 +8,8 @@
     "cook": "git init && yarn && yarn init &&  yarn eslint --init",
     "cook:npm": "git init && npm i && npm init && npx eslint --init",
     "lint": "yarn eslint ./",
-    "lint:npm": "npx eslint ./"
+    "lint:npm": "npx eslint ./",
+    "start": "nodemon server.js"
   },
   "engines": {
     "node": "10.16.0",
@@ -22,7 +23,10 @@
     "eslint-plugin-import": "^2.18.0",
     "husky": "^2.4.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1"
+  },
   "main": "server.js",
   "repository": "git@github.com:thayssn/express-api.git"
 }
