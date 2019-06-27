@@ -4,6 +4,19 @@ let users = require('./data');
 const server = express();
 server.use(express.json());
 
+const jarvis = (req, res, next) => {
+  const { method, originalUrl } = req;
+  console.time('responseTime');
+  next();
+
+  const { statusCode } = res;
+  console.log('Jarvis at your service, sir.');
+  console.log(`[${method}] ${statusCode} @ ${originalUrl}`);
+  console.timeEnd('responseTime');
+};
+
+server.use(jarvis);
+
 server.get('/users', (req, res) => {
   const { petType, petName } = req.query; // query params
   if (petType) {
@@ -46,11 +59,9 @@ server.put('/users/:id', (req, res) => {
 server.delete('/users/:id', (req, res) => {
   const { id } = req.params;
 
-  users = users.filter(u => u.id !== id);
+  users = users.filter(u => u.id !== parseInt(id, 0));
 
   return res.status(200).json({ success: 'usuário deletado com sucesso.' });
 });
 
-server.listen(3333, () => {
-  console.log('Server started.');
-});
+server.listen(3333);
